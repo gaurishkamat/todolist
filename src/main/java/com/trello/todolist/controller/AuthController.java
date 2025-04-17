@@ -32,7 +32,7 @@ public class AuthController {
             );
             String token = jwtUtil.generateToken(authRequest.getUsername());
             return ResponseEntity.ok(new AuthResponse(token));
-        } catch (BadCredentialsException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
