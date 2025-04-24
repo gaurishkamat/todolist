@@ -21,12 +21,6 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @GetMapping("/greet")
-    public String greet()
-    {
-            return "Welcome to ToDo's!!";
-    }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
         try {
@@ -38,5 +32,11 @@ public class AuthController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
+    }
+
+    @GetMapping("/greet")
+    public String greet()
+    {
+        return "Welcome to ToDo's!!";
     }
 }
