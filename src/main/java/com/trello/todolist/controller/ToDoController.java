@@ -20,6 +20,7 @@ public class ToDoController {
 
     @GetMapping("/todos")
     public List<ListItem> getList(){
-        return List.of(new ListItem(1, "Wash Hands", "Wash your hands", "10/12/2024", "pending"));
+        return Arrays.asList(new ListItem(1, "Practice Java", "Write todo controller in Java", "10/12/2024", "pending"),
+                new ListItem(1, "Practice React", "Write todo FE component", "10/12/2024", "pending"));
     }
 }
