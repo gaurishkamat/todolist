@@ -1,8 +1,15 @@
 package com.trello.todolist.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
 import java.util.Date;
 
+@Entity
 public class ListItem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
     private String title;
     private String description;
