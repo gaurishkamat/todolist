@@ -2,6 +2,7 @@ package com.trello.todolist.controller;
 
 import com.trello.todolist.dtos.AuthRequest;
 import com.trello.todolist.dtos.AuthResponse;
+import com.trello.todolist.repository.UserRepository;
 import com.trello.todolist.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
