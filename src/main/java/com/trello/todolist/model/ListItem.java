@@ -1,10 +1,9 @@
 package com.trello.todolist.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-
-import java.util.Date;
 
 @Entity
 public class ListItem {
