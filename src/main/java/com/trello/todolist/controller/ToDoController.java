@@ -1,16 +1,19 @@
 package com.trello.todolist.controller;
 
 import com.trello.todolist.model.ListItem;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.trello.todolist.service.ToDoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
 public class ToDoController {
+
+    @Autowired
+    private ToDoService toDoService;
 
     @GetMapping("/greet")
     public String greet()
@@ -20,7 +23,11 @@ public class ToDoController {
 
     @GetMapping("/todos")
     public List<ListItem> getList(){
-        return Arrays.asList(new ListItem(1, "Practice Java", "Write todo controller in Java", "10/12/2024", "pending"),
-                new ListItem(1, "Practice React", "Write todo FE component", "10/12/2024", "pending"));
+        return toDoService.getToDos();
+    }
+
+    @PostMapping("/add")
+    public ListItem addToDo(@RequestBody ListItem item){
+         return  toDoService.addTodo(item);
     }
 }

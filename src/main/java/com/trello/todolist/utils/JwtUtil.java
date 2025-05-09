@@ -32,7 +32,7 @@ public class JwtUtil {
 
     public String extractUsername(String token) {
         return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(getSignKey())
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
@@ -45,7 +45,7 @@ public class JwtUtil {
 
     private boolean isTokenExpired(String token) {
         Date expiration = Jwts.parser()
-                .setSigningKey(SECRET_KEY)
+                .setSigningKey(getSignKey())
                 .parseClaimsJws(token)
                 .getBody()
                 .getExpiration();
