@@ -27,7 +27,12 @@ public class ToDoController {
     }
 
     @PostMapping("/add")
-    public ListItem addToDo(@RequestBody ListItem item){
-         return  toDoService.addTodo(item);
+    public ListItem add(@RequestBody ListItem item){
+         return  toDoService.add(item);
+    }
+
+    @PutMapping("/update")
+    public ListItem update(@RequestBody ListItem item){
+        return toDoService.update(item);
     }
 }
