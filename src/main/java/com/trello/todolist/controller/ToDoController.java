@@ -35,4 +35,9 @@ public class ToDoController {
     public ListItem update(@RequestBody ListItem item){
         return toDoService.update(item);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Integer id){
+        toDoService.delete(id);
+    }
 }

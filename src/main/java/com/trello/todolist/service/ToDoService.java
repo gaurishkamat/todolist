@@ -36,4 +36,8 @@ public class ToDoService {
     public List<ListItem> getToDos() {
         return toDoRepository.findAll();
     }
+
+    public void delete(Integer id) {
+        toDoRepository.deleteById(id);
+    }
 }
