@@ -15,12 +15,6 @@ public class ToDoController {
     @Autowired
     private ToDoService toDoService;
 
-    @GetMapping("/greet")
-    public String greet()
-    {
-        return "Welcome to ToDo's!!";
-    }
-
     @GetMapping("/todos")
     public List<ListItem> getList(){
         return toDoService.getToDos();
