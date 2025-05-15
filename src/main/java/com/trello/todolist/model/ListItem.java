@@ -1,9 +1,6 @@
 package com.trello.todolist.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 
 @Entity
 public class ListItem {
@@ -14,6 +11,10 @@ public class ListItem {
     private String description;
     private String dateCreated;
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "user-id")
+    private User user;
 
     public ListItem() {
     }
