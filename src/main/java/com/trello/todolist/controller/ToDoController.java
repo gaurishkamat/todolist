@@ -1,7 +1,10 @@
 package com.trello.todolist.controller;
 
 import com.trello.todolist.model.ListItem;
+import com.trello.todolist.model.User;
+import com.trello.todolist.repository.UserRepository;
 import com.trello.todolist.service.ToDoService;
+import com.trello.todolist.utils.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,12 @@ public class ToDoController {
     @Autowired
     private ToDoService toDoService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private JwtFilter jwtFilter;
+
     @GetMapping("/todos")
     public List<ListItem> getList(){
         return toDoService.getToDos();
@@ -22,6 +31,9 @@ public class ToDoController {
 
     @PostMapping("/add")
     public ListItem add(@RequestBody ListItem item){
+        String username = jwtFilter.getLoggedInUsername();
+        User user = userRepository.findByUsername(username).orElseThrow();
+        item.setUser(user);
          return  toDoService.add(item);
     }
 
