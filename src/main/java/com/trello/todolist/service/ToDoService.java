@@ -1,7 +1,10 @@
 package com.trello.todolist.service;
 
 import com.trello.todolist.model.ListItem;
+import com.trello.todolist.model.User;
 import com.trello.todolist.repository.ToDoRepository;
+import com.trello.todolist.repository.UserRepository;
+import com.trello.todolist.utils.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,11 @@ public class ToDoService {
 
     @Autowired
     private ToDoRepository toDoRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    private JwtFilter jwtFilter;
 
     public ListItem add(ListItem listItem){
         toDoRepository.save(listItem);
@@ -34,7 +42,10 @@ public class ToDoService {
     }
 
     public List<ListItem> getToDos() {
-        return toDoRepository.findAll();
+        String username = jwtFilter.getLoggedInUsername();
+        User user = userRepository.findByUsername(username).orElseThrow();
+        return toDoRepository.findByUser(user);
+
     }
 
     public void delete(Integer id) {
