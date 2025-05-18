@@ -8,6 +8,7 @@ import com.trello.todolist.utils.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,18 +28,19 @@ public class ToDoService {
         return listItem;
     }
 
-    public ListItem update(ListItem listItem){
-        Optional<ListItem> optionalItem = toDoRepository.findById(listItem.getId());
-        if (optionalItem.isPresent()) {
-            ListItem existingItem = optionalItem.get();
-            existingItem.setTitle(listItem.getTitle());
-            existingItem.setDescription(listItem.getDescription());
-            existingItem.setStatus(listItem.getStatus());
+    public ListItem update(ListItem listItem) throws AccessDeniedException {
+        String username = jwtFilter.getLoggedInUsername();
+        ListItem existingItem = toDoRepository.findById(listItem.getId())
+                .orElseThrow(() -> new RuntimeException("Todo not found"));
 
-            return toDoRepository.save(existingItem);
-        } else {
-            throw new RuntimeException("ToDo item not found with id: " + listItem.getId());
+        if (!existingItem.getUser().getUsername().equals(username)) {
+            throw new AccessDeniedException("You are not allowed to update this todo.");
         }
+
+        existingItem.setTitle(listItem.getTitle());
+        existingItem.setDescription(listItem.getDescription());
+
+        return toDoRepository.save(existingItem);
     }
 
     public List<ListItem> getToDos() {
