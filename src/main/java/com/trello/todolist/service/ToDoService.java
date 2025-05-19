@@ -50,7 +50,16 @@ public class ToDoService {
 
     }
 
-    public void delete(Integer id) {
+    public void delete(Integer id) throws AccessDeniedException{
+        String username = jwtFilter.getLoggedInUsername();
+
+        ListItem existingItem = toDoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Todo not found"));
+
+        if (!existingItem.getUser().getUsername().equals(username)) {
+            throw new AccessDeniedException("You are not allowed to update this todo.");
+        }
+
         toDoRepository.deleteById(id);
     }
 }
