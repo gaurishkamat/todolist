@@ -57,7 +57,7 @@ public class ToDoService {
                 .orElseThrow(() -> new RuntimeException("Todo not found"));
 
         if (!existingItem.getUser().getUsername().equals(username)) {
-            throw new AccessDeniedException("You are not allowed to update this todo.");
+            throw new AccessDeniedException("You are not allowed to delete this todo.");
         }
 
         toDoRepository.deleteById(id);
