@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,19 +32,19 @@ public class ToDoController {
 
     @PostMapping("/add")
     public ListItem add(@RequestBody ListItem item){
-        String username = jwtFilter.getLoggedInUsername();
+        String username = JwtFilter.getLoggedInUsername();
         User user = userRepository.findByUsername(username).orElseThrow();
         item.setUser(user);
          return  toDoService.add(item);
     }
 
     @PutMapping("/update")
-    public ListItem update(@RequestBody ListItem item){
+    public ListItem update(@RequestBody ListItem item) throws AccessDeniedException {
         return toDoService.update(item);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Integer id){
+    public void delete(@PathVariable Integer id) throws AccessDeniedException {
         toDoService.delete(id);
     }
 }

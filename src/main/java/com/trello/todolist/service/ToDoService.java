@@ -21,15 +21,13 @@ public class ToDoService {
     @Autowired
     private UserRepository userRepository;
 
-    private JwtFilter jwtFilter;
-
     public ListItem add(ListItem listItem){
         toDoRepository.save(listItem);
         return listItem;
     }
 
     public ListItem update(ListItem listItem) throws AccessDeniedException {
-        String username = jwtFilter.getLoggedInUsername();
+        String username = JwtFilter.getLoggedInUsername();
         ListItem existingItem = toDoRepository.findById(listItem.getId())
                 .orElseThrow(() -> new RuntimeException("Todo not found"));
 
@@ -44,14 +42,14 @@ public class ToDoService {
     }
 
     public List<ListItem> getToDos() {
-        String username = jwtFilter.getLoggedInUsername();
+        String username = JwtFilter.getLoggedInUsername();
         User user = userRepository.findByUsername(username).orElseThrow();
         return toDoRepository.findByUser(user);
 
     }
 
     public void delete(Integer id) throws AccessDeniedException{
-        String username = jwtFilter.getLoggedInUsername();
+        String username = JwtFilter.getLoggedInUsername();
 
         ListItem existingItem = toDoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Todo not found"));
