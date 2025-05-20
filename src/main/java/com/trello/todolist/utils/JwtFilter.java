@@ -53,7 +53,7 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    public String getLoggedInUsername() {
+    public static String getLoggedInUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
