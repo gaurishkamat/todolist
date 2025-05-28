@@ -1,5 +1,6 @@
 package com.trello.todolist.service;
 
+import com.trello.todolist.model.Role;
 import com.trello.todolist.model.User;
 import com.trello.todolist.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class MyUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole()));
+        Role role = user.getRole();
+        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role.getName()));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
