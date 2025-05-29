@@ -27,13 +27,13 @@ public class MyUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        Role role = user.getRole();
-        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role.getName()));
+        String role = user.getRole();
+        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(), // should be already encoded
-                Collections.emptyList() // authorities/roles can be added here
+                authorities// authorities/roles can be added here
         );
     }
 }
