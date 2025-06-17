@@ -25,11 +25,13 @@ public class ToDoController {
     @Autowired
     private JwtFilter jwtFilter;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/todos")
     public List<ListItem> getList(){
         return toDoService.getToDos();
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/add")
     public ListItem add(@RequestBody ListItem item){
         String username = JwtFilter.getLoggedInUsername();
@@ -38,11 +40,13 @@ public class ToDoController {
          return  toDoService.add(item);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/update")
     public ListItem update(@RequestBody ListItem item) throws AccessDeniedException {
         return toDoService.update(item);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Integer id) throws AccessDeniedException {
         toDoService.delete(id);

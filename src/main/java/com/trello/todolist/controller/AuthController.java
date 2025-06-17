@@ -24,7 +24,6 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @PreAuthorize("hasRole('USER')")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
         try {
@@ -39,7 +38,7 @@ public class AuthController {
         }
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/greet")
     public String greet()
     {
